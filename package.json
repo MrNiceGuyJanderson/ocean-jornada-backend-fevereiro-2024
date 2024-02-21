@@ -4,7 +4,8 @@
   "description": "Repositorio do curso de BackEnd do Ocean com Node e Express",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "dev" : "nodemon index.js"
   },
   "author": "Janderson Silva",
   "license": "MIT",
