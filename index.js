@@ -26,7 +26,7 @@ app.get('/item/:id', function (req, res){
   res.send(lista[id])
 })
 
-//post
+//CREATE -> [POST] /item
 app.post('/item', function(req, res){
   const {nome} = req.body
   lista.push(nome)
