@@ -23,16 +23,18 @@ async function main() {
     res.send('Curso backend de node com express')
   })
 
-  app.get('/oi', function (req, res) {
-    res.send("Olá mundo!!")
-  })
-
   //lista de personagens
   const lista = ["Rick Sanchez", "Morty Smith", "Summer Smith"]
 
+  //conectar a base de dados
+  const db = client.db(dbName)
+  //Pega a collection
+  const collection = db.collection('items')
+
   //Read All -> [GET] /item
-  app.get('/item', function (req, res) {
-    res.send(lista)
+  app.get('/item', async function (req, res) {
+    const items = await collection.find().toArray()
+    res.send(items)
   })
 
   //Read by ID -> [GET] /item/:id
