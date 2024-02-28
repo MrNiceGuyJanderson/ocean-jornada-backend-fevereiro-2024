@@ -52,10 +52,24 @@ async function main() {
   })
 
   //CREATE -> [POST] /item
-  app.post('/item', function (req, res) {
-    const { nome } = req.body
-    lista.push(nome)
-    res.send(lista)
+  app.post('/item', async function (req, res) {
+    const item  = req.body;
+  
+    await collection.insertOne(item);
+    res.status(200).send(item);
+  })
+
+   //PUT -> [POST] /item
+   app.put('/item/:id', async function (req, res) {
+
+    const id =  req.params.id
+    const novoItem  = req.body;
+  
+    await collection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: novoItem }
+   )
+    res.status(200).send('Item atualizado com sucesso.');
   })
 
   app.listen(3000)
