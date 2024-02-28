@@ -59,7 +59,7 @@ async function main() {
     res.status(200).send(item);
   })
 
-   //PUT -> [POST] /item
+   //UPDATE -> [PUT] /item
    app.put('/item/:id', async function (req, res) {
 
     const id =  req.params.id
@@ -70,6 +70,17 @@ async function main() {
       { $set: novoItem }
    )
     res.status(200).send('Item atualizado com sucesso.');
+  })
+
+  //DELETE -> [DELETE] /item
+  app.delete('/item/:id', async function (req, res) {
+
+    const id =  req.params.id
+  
+    await collection.deleteOne(
+      { _id: new ObjectId(id) }
+   )
+    res.status(200).send('Item excluído com sucesso.');
   })
 
   app.listen(3000)
