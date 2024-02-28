@@ -1,5 +1,5 @@
 const express = require('express')
-const { MongoClient } = require('mongodb')
+const { MongoClient, ObjectId } = require('mongodb')
 
 //string de conexão com mongodb
 const dbUrl = 'mongodb+srv://jscarmo2007:FNgnQRGmpfvqoFiQ@cluster0.ahk93og.mongodb.net/'
@@ -38,9 +38,17 @@ async function main() {
   })
 
   //Read by ID -> [GET] /item/:id
-  app.get('/item/:id', function (req, res) {
+  app.get('/item/:id', async function (req, res) {
     const id = req.params.id
-    res.send(lista[id])
+
+    const item = await collection.findOne({
+      _id : new ObjectId(id)
+    })
+
+    if (!item)
+      return res.status(404).send("Nenhum registro encontrado")
+
+    res.status(200).send(item)
   })
 
   //CREATE -> [POST] /item
